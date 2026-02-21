@@ -1,8 +1,9 @@
 body {
-  background-color: rgb(106, 106, 170);
+  background-color: rgb(202, 202, 202);
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 90vh;
   font-family:
     system-ui,
     -apple-system,
@@ -15,6 +16,7 @@ body {
     "Open Sans",
     "Helvetica Neue",
     sans-serif;
+  transition: background-color 2s ease;
 }
 
 .widget {
@@ -23,7 +25,7 @@ body {
   display: flex;
   flex-direction: column;
   background-color: white;
-  border-radius: 25px;
+  border-radius: 15px;
   align-items: center;
   padding: 30px;
   gap: 20px;

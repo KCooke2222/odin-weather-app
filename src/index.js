@@ -52,16 +52,39 @@ async function loadIcon(iconId) {
   return src;
 }
 
-// temperture: sliding color from blue to orange
-// conditions: icon
+// temperture: sliding color from blue to orange (0 to 100f)
+function tempToColor(temp) {
+  const min = 0;
+  const max = 100;
+
+  const t = Math.max(min, Math.min(max, temp));
+  const ratio = (t - min) / (max - min);
+
+  const midpoint = 0.5;
+
+  if (ratio < midpoint) {
+    // Cold side → blue
+    const strength = (midpoint - ratio) / midpoint; // 0 → 1
+    return `hsl(210, ${20 + 40 * strength}%, ${85 - 35 * strength}%)`;
+  } else {
+    // Hot side → orange
+    const strength = (ratio - midpoint) / midpoint; // 0 → 1
+    return `hsl(30, ${20 + 40 * strength}%, ${85 - 35 * strength}%)`;
+  }
+}
+
 async function updateDisplay(weatherData) {
   conditions.textContent = weatherData.conditions;
   temp.textContent = `${weatherData.temp}° F`;
+
+  const color = tempToColor(weatherData.temp);
+  body.style.backgroundColor = color;
 
   icon.src = await loadIcon(weatherData.icon);
   icon.hidden = false;
 }
 
+const body = document.querySelector("body");
 const search = document.querySelector("#search");
 const display = document.querySelector(".display");
 
