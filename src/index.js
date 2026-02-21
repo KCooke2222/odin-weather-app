@@ -1,3 +1,5 @@
+import "./styles.css";
+
 const iconMappings = {
   snow: "snow",
   "snow-showers-day": "day-snow",
