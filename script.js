@@ -1,3 +1,37 @@
+const iconMappings = {
+  snow: "snow",
+  "snow-showers-day": "day-snow",
+  "snow-showers-night": "night-alt-snow",
+  "thunder-rain": "thunderstorm",
+  "thunder-showers-day": "day-thunderstorm",
+  "thunder-showers-night": "night-alt-thunderstorm",
+  rain: "rain",
+  "showers-day": "day-showers",
+  "showers-night": "night-showers",
+  fog: "fog",
+  wind: "strong-wind",
+  cloudy: "cloudy",
+  "partly-cloudy-day": "day-cloudy",
+  "partly-cloudy-night": "night-alt-partly-cloudy",
+  "clear-day": "day-sunny",
+  "clear-night": "night-clear",
+};
+
+const iconSetIds = {
+  icons1: new Set([
+    "snow",
+    "rain",
+    "fog",
+    "wind",
+    "cloudy",
+    "partly-cloudy-day",
+    "partly-cloudy-night",
+    "clear-day",
+    "clear-night",
+  ]),
+  icons2: new Set(Object.keys(iconMappings)),
+};
+
 async function getWeather(location) {
   const url = new URL(
     `https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${encodeURIComponent(location)}`,
@@ -19,11 +53,20 @@ async function getWeatherData(location) {
   };
 }
 
+function getDisplayIconId(iconId, iconSet = "icons1") {
+  const validIds = iconSetIds[iconSet] || iconSetIds.icons1;
+
+  if (validIds.has(iconId) && iconMappings[iconId]) return iconMappings[iconId];
+  return iconMappings.cloudy;
+}
+
 // temperture: sliding color from blue to orange
 // conditions: icon
 function updateDisplay(weatherData) {
   conditions.textContent = weatherData.conditions;
   temp.textContent = weatherData.temp;
+
+  icon.src = `./icons/wi-${getDisplayIconId(weatherData.icon, "icons2")}.svg`;
 }
 
 const search = document.querySelector("#search");
