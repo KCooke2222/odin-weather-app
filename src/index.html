@@ -9,14 +9,16 @@
     <div class="widget">
       <div class="search">
         <form id="search">
-          <label for="location">Location: </label>
-          <input type="text" id="location" name="location" />
-
-          <button type="submit">Search</button>
+          <input
+            type="text"
+            id="location"
+            name="location"
+            placeholder="Weather in..."
+          />
         </form>
       </div>
       <div class="display">
-        <img alt="weather icon" class="icon" />
+        <img alt="weather icon" class="icon" hidden />
         <p class="conditions"></p>
         <p class="temp"></p>
       </div>
